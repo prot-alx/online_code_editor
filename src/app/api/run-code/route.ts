@@ -19,6 +19,20 @@ export async function POST(request: NextRequest) {
 
     console.log("Received request:", { language, codeLength: code.length });
 
+    if (!code.trim()) {
+      return NextResponse.json({
+        success: false,
+        error: EDITOR_CONFIG.ERROR_MESSAGES.EMPTY_CODE
+      }, { status: 400 });
+    }
+
+    if (code.length > EDITOR_CONFIG.MAX_CODE_LENGTH) {
+      return NextResponse.json({
+        success: false,
+        error: EDITOR_CONFIG.ERROR_MESSAGES.CODE_TOO_LONG(EDITOR_CONFIG.MAX_CODE_LENGTH)
+      }, { status: 400 });
+    }
+    
     // Находим конфигурацию для указанного языка
     const langConfig = supportedLanguages.find(
       (lang) => lang.name === language

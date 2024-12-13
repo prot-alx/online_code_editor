@@ -1,7 +1,7 @@
 "use client";
 import EditorWithControls from "@/components/editor/EditorWithControls";
 import ExecutionResult from "@/components/execution/ExecutionResult";
-import { TASK_DESCRIPTION } from "@/constants";
+import { EDITOR_CONFIG, TASK_DESCRIPTION } from "@/constants";
 import { SupportedLanguage } from "@/lib/utils/supported-languages";
 import React, { useState, useCallback } from "react";
 import { runCode } from "./api/code";
@@ -14,7 +14,7 @@ interface ExecutionResult {
 
 export default function Home() {
   const [code, setCode] = useState("");
-  const [language, setLanguage] = useState<SupportedLanguage>("python");
+  const [language, setLanguage] = useState<SupportedLanguage>(EDITOR_CONFIG.DEFAULT_LANGUAGE);;
   const [result, setResult] = useState<ExecutionResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 

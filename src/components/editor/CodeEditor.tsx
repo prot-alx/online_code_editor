@@ -6,6 +6,7 @@ import { basicSetup } from "codemirror";
 import { defaultKeymap } from "@codemirror/commands";
 import { SupportedLanguage } from "@/lib/utils/supported-languages";
 import { editorExtensions } from "@/lib/types/editor-extensions";
+import { EDITOR_CONFIG } from "@/constants";
 
 interface CodeEditorProps {
   language: SupportedLanguage;
@@ -54,7 +55,24 @@ export default function CodeEditor({
           keymap.of(defaultKeymap),
           EditorView.updateListener.of((update) => {
             if (update.docChanged) {
-              handleDocChange(update.state.doc.toString());
+              const newContent = update.state.doc.toString();
+              if (newContent.length <= EDITOR_CONFIG.MAX_CODE_LENGTH) {
+                onChange(newContent);
+              } else {
+                // Обрезаем до максимальной длины вместо полного возврата
+                const truncatedContent = newContent.slice(
+                  0,
+                  EDITOR_CONFIG.MAX_CODE_LENGTH
+                );
+                view.dispatch({
+                  changes: {
+                    from: 0,
+                    to: view.state.doc.length,
+                    insert: truncatedContent,
+                  },
+                });
+                onChange(truncatedContent);
+              }
             }
           }),
           langExtension(),

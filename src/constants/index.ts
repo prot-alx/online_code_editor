@@ -5,7 +5,12 @@ export const TASK_DESCRIPTION = {
 };
 
 export const EDITOR_CONFIG = {
-  MAX_CODE_LENGTH: 10000,
+  MAX_CODE_LENGTH: 20,
   EXECUTION_TIMEOUT: 10000,
-  DEFAULT_LANGUAGE: 'python' as const
-};
+  DEFAULT_LANGUAGE: 'python' as const,
+  ERROR_MESSAGES: {
+    CODE_TOO_LONG: (length: number) => 
+      `Код превышает максимально допустимую длину (${length} символов)`,
+    EMPTY_CODE: 'Код не может быть пустым',
+  }
+} as const;

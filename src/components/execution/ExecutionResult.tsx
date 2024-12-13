@@ -1,3 +1,5 @@
+import { EDITOR_CONFIG } from "@/constants";
+
 interface ExecutionResult {
   success: boolean;
   output?: string;
@@ -21,7 +23,10 @@ export default function ExecutionResult({
 
   const isSuccess = result.success;
   const content = isSuccess ? result.output : `Ошибка: ${result.error}`;
-  const maxLength = 1000;
+  const truncatedContent =
+    content && content.length > EDITOR_CONFIG.MAX_CODE_LENGTH
+      ? `${content.slice(0, EDITOR_CONFIG.MAX_CODE_LENGTH)}...`
+      : content;
 
   return (
     <div
@@ -29,9 +34,7 @@ export default function ExecutionResult({
         isSuccess ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
       }`}
     >
-      {content && content.length > maxLength
-        ? `${content.slice(0, maxLength)}...`
-        : content}
+      <pre className="whitespace-pre-wrap break-words">{truncatedContent}</pre>
     </div>
   );
 }
