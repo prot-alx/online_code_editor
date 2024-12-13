@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #000000;
+  --primary: #3b82f6;
+  --secondary: #6366f1;
+  --font-geist-sans: theme('fontFamily.sans');
+  --font-geist-mono: theme('fontFamily.mono');
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Dark theme */
+.dark {
+  --background: #111827;
+  --foreground: #f9fafb;
+  --primary: #2563eb;
+  --secondary: #4f46e5;
+}
