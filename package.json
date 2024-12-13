@@ -17,11 +17,13 @@
     "@codemirror/lang-rust": "^6.0.1",
     "@codemirror/state": "^6.5.0",
     "@codemirror/view": "^6.35.3",
+    "clsx": "^2.1.1",
     "codemirror": "^6.0.1",
     "miragejs": "^0.1.48",
     "next": "15.1.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "tailwind-merge": "^2.5.5"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

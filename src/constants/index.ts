@@ -5,7 +5,7 @@ export const TASK_DESCRIPTION = {
 };
 
 export const EDITOR_CONFIG = {
-  MAX_CODE_LENGTH: 20,
+  MAX_CODE_LENGTH: 200,
   EXECUTION_TIMEOUT: 10000,
   DEFAULT_LANGUAGE: 'python' as const,
   ERROR_MESSAGES: {

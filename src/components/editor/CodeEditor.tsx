@@ -4,9 +4,8 @@ import { EditorView, keymap } from "@codemirror/view";
 import { EditorState } from "@codemirror/state";
 import { basicSetup } from "codemirror";
 import { defaultKeymap } from "@codemirror/commands";
-import { SupportedLanguage } from "@/lib/utils/supported-languages";
-import { editorExtensions } from "@/lib/types/editor-extensions";
 import { EDITOR_CONFIG } from "@/constants";
+import { editorExtensions, SupportedLanguage } from "@/lib";
 
 interface CodeEditorProps {
   language: SupportedLanguage;
@@ -21,13 +20,13 @@ const defaultStyles = {
   height: "300px",
 } as const;
 
-export default function CodeEditor({
+export const CodeEditor = ({
   language,
   code,
   onChange,
   className,
   style,
-}: Readonly<CodeEditorProps>) {
+}: Readonly<CodeEditorProps>) => {
   const editorRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | null>(null);
 
@@ -59,7 +58,7 @@ export default function CodeEditor({
               if (newContent.length <= EDITOR_CONFIG.MAX_CODE_LENGTH) {
                 onChange(newContent);
               } else {
-                // Обрезаем до максимальной длины вместо полного возврата
+                // Обрезаем код до максимального разрешенного параметра MAX_CODE_LENGTH
                 const truncatedContent = newContent.slice(
                   0,
                   EDITOR_CONFIG.MAX_CODE_LENGTH
@@ -109,4 +108,4 @@ export default function CodeEditor({
       style={{ ...defaultStyles, ...style }}
     />
   );
-}
+};

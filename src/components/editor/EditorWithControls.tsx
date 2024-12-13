@@ -1,10 +1,7 @@
-import {
-  SupportedLanguage,
-  supportedLanguages,
-} from "@/lib/utils/supported-languages";
 import React, { memo, useCallback, useEffect } from "react";
-import CodeEditor from "./CodeEditor";
+import { SupportedLanguage, supportedLanguages, cn } from "@/lib";
 import { EDITOR_CONFIG } from "@/constants";
+import { CodeEditor } from "..";
 
 interface EditorWithControlsProps {
   language: SupportedLanguage;
@@ -15,7 +12,7 @@ interface EditorWithControlsProps {
   isLoading: boolean;
 }
 
-function EditorWithControls({
+export const EditorWithControls = memo(function EditorWithControls({
   language,
   setLanguage,
   code,
@@ -40,7 +37,6 @@ function EditorWithControls({
         if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
           event.preventDefault();
           event.stopPropagation();
-
           if (!isLoading && code.trim()) {
             onRun();
           }
@@ -54,7 +50,6 @@ function EditorWithControls({
     const editorElement = document.querySelector(".editor-container");
     if (editorElement) {
       editorElement.addEventListener("keydown", handleKeyDown, true);
-
       return () => {
         editorElement.removeEventListener("keydown", handleKeyDown, true);
       };
@@ -67,7 +62,7 @@ function EditorWithControls({
         <select
           value={language}
           onChange={(e) => setLanguage(e.target.value)}
-          className="p-2 border rounded"
+          className="p-2 border rounded cursor-pointer h-10"
         >
           {supportedLanguages.map((lang) => (
             <option key={lang.name} value={lang.name}>
@@ -78,7 +73,7 @@ function EditorWithControls({
         <button
           onClick={onRun}
           disabled={isLoading || !code.trim()}
-          className="bg-blue-500 text-white px-4 py-2 rounded
+          className="bg-blue-500 text-white h-10 px-4 py-2 rounded
                      hover:bg-blue-600 disabled:opacity-50
                      transition-colors duration-200"
         >
@@ -87,13 +82,13 @@ function EditorWithControls({
       </div>
       <CodeEditor language={language} code={code} onChange={handleCodeChange} />
       <p
-        className={`text-sm ${
-          code.length >= EDITOR_CONFIG.MAX_CODE_LENGTH
-            ? "text-red-600"
-            : code.length > EDITOR_CONFIG.MAX_CODE_LENGTH * 0.8
-            ? "text-amber-600"
-            : "text-gray-500"
-        }`}
+        className={cn(
+          "text-sm text-gray-500",
+          {
+            "text-amber-600": code.length > EDITOR_CONFIG.MAX_CODE_LENGTH * 0.8,
+          },
+          { "text-red-600": code.length >= EDITOR_CONFIG.MAX_CODE_LENGTH }
+        )}
       >
         {code.length >= EDITOR_CONFIG.MAX_CODE_LENGTH
           ? "Достигнут лимит символов!"
@@ -101,6 +96,4 @@ function EditorWithControls({
       </p>
     </div>
   );
-}
-
-export default memo(EditorWithControls);
+});
