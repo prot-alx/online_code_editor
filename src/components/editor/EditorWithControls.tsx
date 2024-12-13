@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect } from "react";
+import React, { memo, useCallback, useEffect, useRef } from "react";
 import { SupportedLanguage, supportedLanguages, cn } from "@/lib";
 import { EDITOR_CONFIG } from "@/constants";
 import { CodeEditor } from "..";
@@ -20,6 +20,8 @@ export const EditorWithControls = memo(function EditorWithControls({
   onRun,
   isLoading,
 }: Readonly<EditorWithControlsProps>) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
   const handleCodeChange = useCallback(
     (newCode: string) => {
       if (newCode.length <= EDITOR_CONFIG.MAX_CODE_LENGTH) {
@@ -36,7 +38,6 @@ export const EditorWithControls = memo(function EditorWithControls({
       if (event instanceof KeyboardEvent) {
         if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
           event.preventDefault();
-          event.stopPropagation();
           if (!isLoading && code.trim()) {
             onRun();
           }
@@ -47,17 +48,20 @@ export const EditorWithControls = memo(function EditorWithControls({
   );
 
   useEffect(() => {
-    const editorElement = document.querySelector(".editor-container");
-    if (editorElement) {
-      editorElement.addEventListener("keydown", handleKeyDown, true);
+    const element = containerRef?.current;
+    if (element) {
+      element.addEventListener("keydown", handleKeyDown, true);
       return () => {
-        editorElement.removeEventListener("keydown", handleKeyDown, true);
+        element.removeEventListener("keydown", handleKeyDown, true);
       };
     }
   }, [handleKeyDown]);
 
+  const emberStyleText = code.length > EDITOR_CONFIG.MAX_CODE_LENGTH * 0.8;
+  const redStyleText = code.length >= EDITOR_CONFIG.MAX_CODE_LENGTH;
+
   return (
-    <div className="editor-container space-y-4">
+    <div ref={containerRef} className="space-y-4">
       <div className="flex items-center gap-4">
         <select
           value={language}
@@ -84,13 +88,11 @@ export const EditorWithControls = memo(function EditorWithControls({
       <p
         className={cn(
           "text-sm text-gray-500",
-          {
-            "text-amber-600": code.length > EDITOR_CONFIG.MAX_CODE_LENGTH * 0.8,
-          },
-          { "text-red-600": code.length >= EDITOR_CONFIG.MAX_CODE_LENGTH }
+          { "text-amber-600": emberStyleText },
+          { "text-red-600": redStyleText }
         )}
       >
-        {code.length >= EDITOR_CONFIG.MAX_CODE_LENGTH
+        {redStyleText
           ? "Достигнут лимит символов!"
           : `Осталось символов: ${EDITOR_CONFIG.MAX_CODE_LENGTH - code.length}`}
       </p>

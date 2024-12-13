@@ -17,7 +17,7 @@ export const ExecutionResult = ({ result }: Readonly<ExecutionResultProps>) => {
     );
   }
 
-  const isSuccess = result.success;
+  const isSuccess = result?.success;
   const content = isSuccess ? result.output : `Ошибка: ${result.error}`;
 
   return (

@@ -17,6 +17,8 @@ export async function POST(request: NextRequest) {
   try {
     const { code, language } = await request.json();
 
+    // добавить проверку
+
     console.log("Received request:", { language, codeLength: code.length });
 
     if (!code.trim()) {

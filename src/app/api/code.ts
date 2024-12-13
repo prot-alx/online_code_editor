@@ -20,12 +20,12 @@ export async function runCode({
     body: JSON.stringify({ code, language }),
   });
 
-  console.log("Статус ответа:", response.status);
+  console.log("Статус ответа:", response?.status);
 
-  const data = await response.json();
+  const data = await response.json();  
 
   if (!response.ok) {
-    throw new Error(data.error ||`HTTP error! status: ${response.status}`);
+    throw new Error(data.error ||`HTTP error! status: ${response?.status}`);
   }
 
   console.log("Полученные данные:", data);

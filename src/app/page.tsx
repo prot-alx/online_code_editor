@@ -23,7 +23,7 @@ export default function Home() {
     if (!code.trim()) {
       setResult({
         success: false,
-        error: "Код не может быть пустым",
+        error: "Содержимое поля не может быть пустым",
       });
       return;
     }
@@ -33,7 +33,9 @@ export default function Home() {
 
     try {
       const data = await runCode({ code, language });
-      setResult(data);
+      if (data) {
+        setResult(data);
+      }
     } catch (error) {
       console.error("Ошибка выполнения:", error);
       setResult({

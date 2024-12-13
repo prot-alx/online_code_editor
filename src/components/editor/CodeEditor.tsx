@@ -38,7 +38,7 @@ export const CodeEditor = ({
   );
 
   useEffect(() => {
-    if (!editorRef.current) return;
+    if (!editorRef?.current) return;
 
     const langExtension = editorExtensions[language];
     if (!langExtension) {
@@ -77,9 +77,9 @@ export const CodeEditor = ({
           langExtension(),
         ],
       }),
-      parent: editorRef.current,
+      parent: editorRef?.current,
     });
-
+    
     viewRef.current = view;
 
     return () => {
@@ -89,7 +89,7 @@ export const CodeEditor = ({
   }, [language, onChange, handleDocChange]);
 
   useEffect(() => {
-    const view = viewRef.current;
+    const view = viewRef?.current;
     if (!view || view.state.doc.toString() === code) return;
 
     view.dispatch({
