@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { debounce, SupportedLanguage } from "@/lib";
 import { EDITOR_CONFIG } from "@/constants";
 import { CodeEditor, EditorControls } from "..";
@@ -13,14 +13,14 @@ interface EditorWithControlsProps {
   isLoading: boolean;
 }
 
-export const EditorWithControls = memo(function EditorWithControls({
+export const EditorWithControls = ({
   language,
   setLanguage,
   code,
   setCode,
   onRun,
   isLoading,
-}: Readonly<EditorWithControlsProps>) {
+}: Readonly<EditorWithControlsProps>) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const handleCodeChange = (newCode: string) => {
@@ -31,14 +31,11 @@ export const EditorWithControls = memo(function EditorWithControls({
     }
   };
 
-  // Обернем в дебаунс ввод текса, чтобы избежать излишне частого ререндера
-  // Дебаунс написан вручную, но можно добавить и пакет use-debounce
   const debouncedHandleCodeChange = debounce(handleCodeChange, 200);
 
   const handleKeyDown = useCallback(
     (event: Event) => {
       if (event instanceof KeyboardEvent) {
-        // metakey для макбука
         if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
           event.preventDefault();
           if (!isLoading && code.trim()) {
@@ -82,4 +79,4 @@ export const EditorWithControls = memo(function EditorWithControls({
       </Card>
     </div>
   );
-});
+};

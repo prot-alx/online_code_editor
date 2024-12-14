@@ -27,7 +27,7 @@ export const CodeEditor = ({
   className,
   style,
 }: Readonly<CodeEditorProps>) => {
-  const editorRef = useRef<HTMLDivElement>(null);
+  const editorRef = useRef<HTMLDivElement | null>(null);
   const viewRef = useRef<EditorView | null>(null);
 
   useEffect(() => {
@@ -78,7 +78,7 @@ export const CodeEditor = ({
       view.destroy();
       viewRef.current = null;
     };
-  }, [language, onChange, code]);
+  }, []);
 
   useEffect(() => {
     const view = viewRef?.current;
