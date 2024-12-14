@@ -58,7 +58,7 @@ export const CodeEditor = ({
               if (newContent.length <= EDITOR_CONFIG.MAX_CODE_LENGTH) {
                 onChange(newContent);
               } else {
-                // Обрезаем код до максимального разрешенного параметра MAX_CODE_LENGTH
+                // Обрезаем код до максимального разрешенного параметра MAX_CODE_LENGTH, в конфиге EDITOR_CONFIG 200 дефолт
                 const truncatedContent = newContent.slice(
                   0,
                   EDITOR_CONFIG.MAX_CODE_LENGTH
@@ -79,7 +79,7 @@ export const CodeEditor = ({
       }),
       parent: editorRef?.current,
     });
-    
+
     viewRef.current = view;
 
     return () => {

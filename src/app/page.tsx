@@ -3,7 +3,13 @@ import React, { useState, useCallback } from "react";
 import { EDITOR_CONFIG, TASK_DESCRIPTION } from "@/constants";
 import { SupportedLanguage } from "@/lib";
 import { runCode } from "./api/code";
-import { EditorWithControls, ExecutionResult } from "@/app/components";
+import {
+  CodeSamples,
+  EditorWithControls,
+  ExecutionResult,
+} from "@/app/components";
+import { Card, CardContent, CardHeader } from "./components/ui/card";
+import { Alert } from "./components/ui/alert";
 
 interface ExecutionResult {
   success: boolean;
@@ -51,9 +57,13 @@ export default function Home() {
 
   return (
     <main className="2xl:container mx-auto px-4 py-8 flex flex-col gap-6">
-      <section className="bg-gray-100 p-4 rounded-lg">
-        <h2 className="text-xl font-bold mb-4">{TASK_DESCRIPTION.title}</h2>
-        <p>{TASK_DESCRIPTION.content}</p>
+      <section>
+        <Card>
+          <CardHeader>
+            <h2 className="text-xl font-bold">{TASK_DESCRIPTION.title}</h2>
+          </CardHeader>
+          <Alert className="bg-slate-5">{TASK_DESCRIPTION.content}</Alert>
+        </Card>
       </section>
 
       <section className="grid md:grid-cols-2 gap-6">
@@ -65,11 +75,19 @@ export default function Home() {
           onRun={handleRun}
           isLoading={isLoading}
         />
-
-        <article className="bg-gray-50 p-4 rounded-lg min-h-[300px]">
-          <h3 className="text-lg font-semibold mb-2">Результат</h3>
-          <ExecutionResult result={result} />
+        <article>
+          <Card className="h-full">
+            <CardContent>
+              <CardHeader>
+                <h3>Результат</h3>
+              </CardHeader>
+              <ExecutionResult result={result} />
+            </CardContent>
+          </Card>
         </article>
+      </section>
+      <section>
+        <CodeSamples language={language} />
       </section>
     </main>
   );

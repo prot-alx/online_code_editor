@@ -1,8 +1,8 @@
 import React, { memo, useCallback, useEffect, useMemo, useRef } from "react";
 import { debounce, SupportedLanguage } from "@/lib";
 import { EDITOR_CONFIG } from "@/constants";
-import { CodeEditor } from "..";
-import { EditorControls } from "./EditorControls";
+import { CodeEditor, EditorControls } from "..";
+import { Card, CardContent } from "../ui/card";
 
 interface EditorWithControlsProps {
   language: SupportedLanguage;
@@ -24,7 +24,7 @@ export const EditorWithControls = memo(function EditorWithControls({
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Обернем в дебаунс ввод текса, чтобы избежать излишне частого ререндера
-  // Дебаунс написан вручную во избежание добавления одноименной библиотеки, т.к. он нужен только в одном месте
+  // Дебаунс написан вручную, но можно добавить и пакет use-debounce
   const debouncedHandleCodeChange = useMemo(
     () =>
       debounce((newCode: string) => {
@@ -33,7 +33,7 @@ export const EditorWithControls = memo(function EditorWithControls({
         } else {
           setCode(newCode.slice(0, EDITOR_CONFIG.MAX_CODE_LENGTH));
         }
-      }, 300),
+      }, 200),
     [setCode]
   );
 
@@ -44,7 +44,7 @@ export const EditorWithControls = memo(function EditorWithControls({
   const handleKeyDown = useCallback(
     (event: Event) => {
       if (event instanceof KeyboardEvent) {
-        // metakey для mac
+        // metakey для макбука
         if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
           event.preventDefault();
           if (!isLoading && code.trim()) {
@@ -68,16 +68,24 @@ export const EditorWithControls = memo(function EditorWithControls({
 
   return (
     <div ref={containerRef} className="space-y-4">
-      <EditorControls
-        language={language}
-        setLanguage={setLanguage}
-        code={code}
-        onRun={onRun}
-        isLoading={isLoading}
-        codeLength={code.length}
-        maxLength={EDITOR_CONFIG.MAX_CODE_LENGTH}
-      />
-      <CodeEditor language={language} code={code} onChange={handleCodeChange} />
+      <Card>
+        <CardContent>
+          <EditorControls
+            language={language}
+            setLanguage={setLanguage}
+            code={code}
+            onRun={onRun}
+            isLoading={isLoading}
+            codeLength={code.length}
+            maxLength={EDITOR_CONFIG.MAX_CODE_LENGTH}
+          />
+          <CodeEditor
+            language={language}
+            code={code}
+            onChange={handleCodeChange}
+          />
+        </CardContent>
+      </Card>
     </div>
   );
 });

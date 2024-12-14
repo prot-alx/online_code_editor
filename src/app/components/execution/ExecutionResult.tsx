@@ -1,3 +1,6 @@
+import { Alert, AlertDescription } from "../ui/alert";
+import { CheckCircle2, XCircle, Terminal } from "lucide-react";
+
 interface ExecutionResult {
   success: boolean;
   output?: string;
@@ -11,22 +14,26 @@ interface ExecutionResultProps {
 export const ExecutionResult = ({ result }: Readonly<ExecutionResultProps>) => {
   if (!result) {
     return (
-      <p className="text-gray-500">
-        Результат будет показан здесь после выполнения кода
-      </p>
+      <Alert variant="default">
+        <Terminal className="h-4 w-4" />
+        <AlertDescription variant="pre">
+          Результат будет показан здесь после выполнения кода
+        </AlertDescription>
+      </Alert>
     );
   }
 
-  const isSuccess = result?.success;
+  const isSuccess = result.success;
   const content = isSuccess ? result.output : `Ошибка: ${result.error}`;
 
   return (
-    <div
-      className={`p-3 rounded ${
-        isSuccess ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
-      }`}
-    >
-      <pre className="whitespace-pre-wrap break-words">{content}</pre>
-    </div>
+    <Alert variant={isSuccess ? "success" : "destructive"}>
+      {isSuccess ? (
+        <CheckCircle2 className="h-4 w-4" />
+      ) : (
+        <XCircle className="h-4 w-4" />
+      )}
+      <AlertDescription variant="pre">{content}</AlertDescription>
+    </Alert>
   );
 };
