@@ -6,8 +6,10 @@ RUN apt-get update && apt-get install -y \
     python3 \
     python3-pip \
     golang \
-    # g++ \
-    # default-jdk \
+    g++ \
+    default-jdk \
+    rustc \
+    cargo \
     && ln -s /usr/bin/python3 /usr/bin/python \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
