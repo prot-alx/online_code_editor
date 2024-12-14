@@ -18,12 +18,17 @@ export const LanguageSelector = memo(function LanguageSelector({
   setLanguage,
 }: Readonly<LanguageSelectorProps>) {
   return (
-    <Select value={language} onValueChange={setLanguage}>
+    <Select
+      value={language}
+      onValueChange={setLanguage}
+      aria-label="Язык программирования"
+      aria-description="Выберите язык программирования для редактора кода"
+    >
       <SelectTrigger
         className="w-[180px]"
         aria-label="Выбор языка программирования"
       >
-        {/* На случай, если питон не будем по умолчанию нужен плейсхолдер */}
+        {/* плейсхолдер на случай, если питон не будет выставлен по умолчанию */}
         <SelectValue placeholder="Выберите язык" />
       </SelectTrigger>
       <SelectContent>
