@@ -3,7 +3,7 @@ import React, { useState, useCallback } from "react";
 import { EDITOR_CONFIG, TASK_DESCRIPTION } from "@/constants";
 import { SupportedLanguage } from "@/lib";
 import { runCode } from "./api/code";
-import { EditorWithControls, ExecutionResult } from "@/components";
+import { EditorWithControls, ExecutionResult } from "@/app/components";
 
 interface ExecutionResult {
   success: boolean;

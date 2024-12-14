@@ -5,9 +5,12 @@ import path from "path";
 import { supportedLanguages } from "@/lib/utils/supported-languages";
 import { EDITOR_CONFIG } from "@/constants";
 
+// Нужно для того, чтобы в докере корректно проходила проверка установлен ли язык
 function checkCommandExists(command: string): Promise<boolean> {
   return new Promise((resolve) => {
-    exec(`where ${command}`, (error) => {
+    const checkCommand = process.platform === "win32" ? "where" : "which";
+    exec(`${checkCommand} ${command}`, (error) => {
+      console.log(`Checking ${command}:`, error ? "not found" : "found");
       resolve(!error);
     });
   });
@@ -15,26 +18,65 @@ function checkCommandExists(command: string): Promise<boolean> {
 
 export async function POST(request: NextRequest) {
   try {
-    const { code, language } = await request.json();
+    const data = await request.json();
 
-    // добавить проверку
+    // Валидация наличия необходимых полей
+    if (!data || typeof data !== "object") {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Invalid request data",
+        },
+        { status: 400 }
+      );
+    }
+
+    const { code, language } = data;
+
+    if (typeof code !== "string") {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Code must be a string",
+        },
+        { status: 400 }
+      );
+    }
+
+    if (!language || typeof language !== "string") {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Language is required and must be a string",
+        },
+        { status: 400 }
+      );
+    }
 
     console.log("Received request:", { language, codeLength: code.length });
 
     if (!code.trim()) {
-      return NextResponse.json({
-        success: false,
-        error: EDITOR_CONFIG.ERROR_MESSAGES.EMPTY_CODE
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          error: EDITOR_CONFIG.ERROR_MESSAGES.EMPTY_CODE,
+        },
+        { status: 400 }
+      );
     }
 
     if (code.length > EDITOR_CONFIG.MAX_CODE_LENGTH) {
-      return NextResponse.json({
-        success: false,
-        error: EDITOR_CONFIG.ERROR_MESSAGES.CODE_TOO_LONG(EDITOR_CONFIG.MAX_CODE_LENGTH)
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          error: EDITOR_CONFIG.ERROR_MESSAGES.CODE_TOO_LONG(
+            EDITOR_CONFIG.MAX_CODE_LENGTH
+          ),
+        },
+        { status: 400 }
+      );
     }
-    
+
     // Находим конфигурацию для указанного языка
     const langConfig = supportedLanguages.find(
       (lang) => lang.name === language
