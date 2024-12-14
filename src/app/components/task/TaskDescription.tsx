@@ -1,9 +1,7 @@
 "use client";
-
-import { Card, CardHeader } from "../ui/card";
-import { TASK_DESCRIPTION } from "@/constants";
-import { Alert } from "../ui/alert";
 import { memo } from "react";
+import { Card, CardHeader, Alert } from "../ui";
+import { TASK_DESCRIPTION } from "@/constants";
 
 // пришлось мемоизировать, иначе на мобильных устройствах страдала производительность, индекс LCP был красным
 const TaskContent = memo(function TaskContent() {

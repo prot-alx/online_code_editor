@@ -1,6 +1,5 @@
-import { Alert, AlertDescription } from "../ui/alert";
 import { CheckCircle2, XCircle, Terminal } from "lucide-react";
-import { Card, CardContent, CardHeader } from "../ui/card";
+import { Alert, AlertDescription, Card, CardContent, CardHeader } from "../ui";
 
 interface ExecutionResult {
   success: boolean;

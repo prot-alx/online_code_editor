@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import copy from "clipboard-copy";
 import { CODE_SAMPLES } from "@/constants";
 import { SupportedLanguage } from "@/lib";
-import { Card, CardHeader } from "../ui/card";
-import { Alert } from "../ui/alert";
-import { Button } from "../ui/button";
 import { Copy, Check } from "lucide-react";
+import { Alert, Button, Card, CardHeader } from "../ui";
 
 interface CodeSamplesProps {
   language: SupportedLanguage;

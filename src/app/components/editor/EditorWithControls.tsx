@@ -2,7 +2,7 @@ import React, { memo, useCallback, useEffect, useMemo, useRef } from "react";
 import { debounce, SupportedLanguage } from "@/lib";
 import { EDITOR_CONFIG } from "@/constants";
 import { CodeEditor, EditorControls } from "..";
-import { Card, CardContent } from "../ui/card";
+import { Card, CardContent } from "../ui";
 
 interface EditorWithControlsProps {
   language: SupportedLanguage;

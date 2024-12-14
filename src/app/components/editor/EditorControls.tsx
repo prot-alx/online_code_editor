@@ -1,10 +1,7 @@
 "use client";
-
 import React, { memo } from "react";
 import { SupportedLanguage } from "@/lib";
-import { RunButton } from "../features/RunButton";
-import { LanguageSelector } from "../features/LanguageSelector";
-import { CharacterCounter } from "../features/CharCounter";
+import { CharacterCounter, LanguageSelector, RunButton } from "..";
 
 interface EditorControlsProps {
   language: SupportedLanguage;

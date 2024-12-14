@@ -1,5 +1,5 @@
-import { memo } from "react";
 import { cn } from "@/lib";
+import { memo } from "react";
 
 interface CharacterCounterProps {
   currentLength: number;
