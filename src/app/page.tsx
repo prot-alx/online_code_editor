@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useCallback } from "react";
-import { EDITOR_CONFIG, TASK_DESCRIPTION } from "@/constants";
+import { EDITOR_CONFIG } from "@/constants";
 import { SupportedLanguage } from "@/lib";
 import { runCode } from "./api/code";
 import {
@@ -8,8 +8,7 @@ import {
   EditorWithControls,
   ExecutionResult,
 } from "@/app/components";
-import { Card, CardContent, CardHeader } from "./components/ui/card";
-import { Alert } from "./components/ui/alert";
+import { TaskDescription } from "./components/task/TaskDescription";
 
 interface ExecutionResult {
   success: boolean;
@@ -58,12 +57,7 @@ export default function Home() {
   return (
     <main className="2xl:container mx-auto px-4 py-8 flex flex-col gap-6">
       <section>
-        <Card>
-          <CardHeader>
-            <h2 className="text-xl font-bold">{TASK_DESCRIPTION.title}</h2>
-          </CardHeader>
-          <Alert className="bg-slate-5">{TASK_DESCRIPTION.content}</Alert>
-        </Card>
+        <TaskDescription />
       </section>
 
       <section className="grid md:grid-cols-2 gap-6">
@@ -76,14 +70,7 @@ export default function Home() {
           isLoading={isLoading}
         />
         <article>
-          <Card className="h-full">
-            <CardContent>
-              <CardHeader>
-                <h3>Результат</h3>
-              </CardHeader>
-              <ExecutionResult result={result} />
-            </CardContent>
-          </Card>
+          <ExecutionResult result={result} />
         </article>
       </section>
       <section>

@@ -1,3 +1,5 @@
+"use client";
+import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
 import { Button } from "../ui/button";
 
@@ -8,10 +10,16 @@ interface RunButtonProps {
 }
 
 export const RunButton = ({ onRun, isLoading, code }: RunButtonProps) => {
+  const [isCodeEmpty, setIsCodeEmpty] = useState(true);
+
+  useEffect(() => {
+    setIsCodeEmpty(!code.trim());
+  }, [code]);
+
   return (
     <Button
       onClick={onRun}
-      disabled={isLoading || !code.trim()}
+      disabled={isLoading || isCodeEmpty}
       variant="default"
       className="min-w-[100px]"
       aria-label="RunCode"

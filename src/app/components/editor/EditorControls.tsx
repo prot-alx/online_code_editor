@@ -1,3 +1,5 @@
+"use client";
+
 import React, { memo } from "react";
 import { SupportedLanguage } from "@/lib";
 import { RunButton } from "../features/RunButton";
