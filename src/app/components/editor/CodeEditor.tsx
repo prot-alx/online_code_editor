@@ -97,6 +97,9 @@ export const CodeEditor = ({
       ref={editorRef}
       className={className}
       style={{ ...defaultStyles, ...style }}
+      role="textbox"
+      aria-label={`Редактор кода ${language}`}
+      aria-multiline="true"
     />
   );
 };
