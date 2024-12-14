@@ -10,7 +10,6 @@ function checkCommandExists(command: string): Promise<boolean> {
   return new Promise((resolve) => {
     const checkCommand = process.platform === "win32" ? "where" : "which";
     exec(`${checkCommand} ${command}`, (error) => {
-      console.log(`Checking ${command}:`, error ? "not found" : "found");
       resolve(!error);
     });
   });
@@ -52,8 +51,6 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-
-    console.log("Received request:", { language, codeLength: code.length });
 
     if (!code.trim()) {
       return NextResponse.json(
@@ -97,10 +94,6 @@ export async function POST(request: NextRequest) {
     const isCommandAvailable = await checkCommandExists(
       langConfig.checkCommand
     );
-    console.log("Command availability:", {
-      command: langConfig.checkCommand,
-      isAvailable: isCommandAvailable,
-    });
 
     if (!isCommandAvailable) {
       return NextResponse.json(
@@ -124,13 +117,11 @@ export async function POST(request: NextRequest) {
       `script_${timestamp}.${langConfig.extension}`
     );
 
-    console.log("Creating temp file:", filename);
     fs.writeFileSync(filename, code);
 
     // Формируем и выполняем команду
     return new Promise<NextResponse>((resolve) => {
       const command = langConfig.command(filename);
-      console.log("Executing command:", command);
 
       exec(
         command,
@@ -142,7 +133,6 @@ export async function POST(request: NextRequest) {
           try {
             // Удаляем временный файл
             fs.unlinkSync(filename);
-            console.log("Temp file cleaned up");
 
             if (error) {
               console.error("Execution error:", { error, stderr });
@@ -156,7 +146,6 @@ export async function POST(request: NextRequest) {
                 )
               );
             } else {
-              console.log("Execution successful:", { stdout });
               resolve(
                 NextResponse.json({
                   success: true,

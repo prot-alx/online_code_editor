@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useMemo, useRef } from "react";
+import React, { memo, useCallback, useEffect, useRef } from "react";
 import { debounce, SupportedLanguage } from "@/lib";
 import { EDITOR_CONFIG } from "@/constants";
 import { CodeEditor, EditorControls } from "..";
@@ -23,23 +23,17 @@ export const EditorWithControls = memo(function EditorWithControls({
 }: Readonly<EditorWithControlsProps>) {
   const containerRef = useRef<HTMLDivElement>(null);
 
+  const handleCodeChange = (newCode: string) => {
+    if (newCode.length <= EDITOR_CONFIG.MAX_CODE_LENGTH) {
+      setCode(newCode);
+    } else {
+      setCode(newCode.slice(0, EDITOR_CONFIG.MAX_CODE_LENGTH));
+    }
+  };
+
   // Обернем в дебаунс ввод текса, чтобы избежать излишне частого ререндера
   // Дебаунс написан вручную, но можно добавить и пакет use-debounce
-  const debouncedHandleCodeChange = useMemo(
-    () =>
-      debounce((newCode: string) => {
-        if (newCode.length <= EDITOR_CONFIG.MAX_CODE_LENGTH) {
-          setCode(newCode);
-        } else {
-          setCode(newCode.slice(0, EDITOR_CONFIG.MAX_CODE_LENGTH));
-        }
-      }, 200),
-    [setCode]
-  );
-
-  const handleCodeChange = useCallback(debouncedHandleCodeChange, [
-    debouncedHandleCodeChange,
-  ]);
+  const debouncedHandleCodeChange = debounce(handleCodeChange, 200);
 
   const handleKeyDown = useCallback(
     (event: Event) => {
@@ -82,7 +76,7 @@ export const EditorWithControls = memo(function EditorWithControls({
           <CodeEditor
             language={language}
             code={code}
-            onChange={handleCodeChange}
+            onChange={debouncedHandleCodeChange}
           />
         </CardContent>
       </Card>
