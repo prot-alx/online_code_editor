@@ -128,7 +128,7 @@ export async function POST(request: NextRequest) {
     fs.writeFileSync(filename, code);
 
     // Формируем и выполняем команду
-    return new Promise((resolve) => {
+    return new Promise<NextResponse>((resolve) => {
       const command = langConfig.command(filename);
       console.log("Executing command:", command);
 

@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { EditorView, keymap } from "@codemirror/view";
 import { EditorState } from "@codemirror/state";
 import { basicSetup } from "codemirror";
@@ -30,13 +30,6 @@ export const CodeEditor = ({
   const editorRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | null>(null);
 
-  const handleDocChange = useCallback(
-    (doc: string) => {
-      onChange(doc);
-    },
-    [onChange]
-  );
-
   useEffect(() => {
     if (!editorRef?.current) return;
 
@@ -58,7 +51,6 @@ export const CodeEditor = ({
               if (newContent.length <= EDITOR_CONFIG.MAX_CODE_LENGTH) {
                 onChange(newContent);
               } else {
-                // Обрезаем код до максимального разрешенного параметра MAX_CODE_LENGTH, в конфиге EDITOR_CONFIG 200 дефолт
                 const truncatedContent = newContent.slice(
                   0,
                   EDITOR_CONFIG.MAX_CODE_LENGTH
@@ -86,12 +78,11 @@ export const CodeEditor = ({
       view.destroy();
       viewRef.current = null;
     };
-  }, [language, onChange, handleDocChange]);
+  }, [language, onChange, code]);
 
   useEffect(() => {
     const view = viewRef?.current;
     if (!view || view.state.doc.toString() === code) return;
-
     view.dispatch({
       changes: {
         from: 0,

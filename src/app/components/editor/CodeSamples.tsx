@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import copy from "clipboard-copy";
 import { CODE_SAMPLES } from "@/constants";
 import { SupportedLanguage } from "@/lib";
 import { Card, CardHeader } from "../ui/card";
@@ -22,9 +23,13 @@ export const CodeSamples = ({ language }: CodeSamplesProps) => {
   }
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(currentSample.code);
-    setIsCopied(true);
-    setTimeout(() => setIsCopied(false), 2000);
+    try {
+      await copy(currentSample.code);
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy:", err);
+    }
   };
 
   return (
