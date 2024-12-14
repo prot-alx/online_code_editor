@@ -32,7 +32,7 @@ export const CodeSamples = ({ language }: CodeSamplesProps) => {
 
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between">
+      <CardHeader className="flex flex-row items-center gap-2">
         <h3>Пример {currentSample.language}</h3>
         <Button
           variant="ghost"
