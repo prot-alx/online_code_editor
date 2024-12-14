@@ -19,12 +19,20 @@ export const LanguageSelector = memo(function LanguageSelector({
 }: Readonly<LanguageSelectorProps>) {
   return (
     <Select value={language} onValueChange={setLanguage}>
-      <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Select language" />
+      <SelectTrigger
+        className="w-[180px]"
+        aria-label="Выбор языка программирования"
+      >
+        {/* На случай, если питон не будем по умолчанию нужен плейсхолдер */}
+        <SelectValue placeholder="Выберите язык" />
       </SelectTrigger>
       <SelectContent>
         {supportedLanguages.map((lang) => (
-          <SelectItem key={lang.name} value={lang.name}>
+          <SelectItem
+            key={lang.name}
+            value={lang.name}
+            aria-label={`Выбрать язык ${lang.label}`}
+          >
             {lang.label}
           </SelectItem>
         ))}
