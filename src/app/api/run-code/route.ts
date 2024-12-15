@@ -5,7 +5,8 @@ import path from "path";
 import { supportedLanguages } from "@/lib/utils/supported-languages";
 import { EDITOR_CONFIG } from "@/constants";
 
-// Нужно для того, чтобы в системе корректно проходила проверка установлен ли язык
+// Нужно для того, чтобы на сервере корректно проходила проверка установлен ли язык
+// На винде через where, на UNIX через which
 function checkCommandExists(command: string): Promise<boolean> {
   return new Promise((resolve) => {
     const checkCommand = process.platform === "win32" ? "where" : "which";
