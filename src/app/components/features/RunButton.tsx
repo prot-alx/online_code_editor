@@ -16,7 +16,7 @@ export const RunButton = ({ onExecute, isLoading, code }: RunButtonProps) => {
       onClick={onExecute}
       disabled={isLoading || isCodeEmpty}
       variant="default"
-      className="min-w-[100px]"
+      className="w-[180px]"
       aria-label="RunCode"
     >
       {isLoading ? (

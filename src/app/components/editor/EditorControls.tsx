@@ -24,7 +24,7 @@ export const EditorControls = memo(function EditorControls({
 }: Readonly<EditorControlsProps>) {
   return (
     <div className="space-y-4">
-      <div className="flex items-center gap-4">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
         <LanguageSelector language={language} setLanguage={setLanguage} />
         <RunButton onExecute={onExecute} isLoading={isLoading} code={code} />
       </div>
