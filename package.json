@@ -7,8 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "setup": "npm install && npm run dev",
-    "setup:prod": "npm install && npm run build && npm run start"
+    "setup:dev": "npm install && npm run dev",
+    "setup:prod": "npm install && npm run build && npm run start",
+    "prod": "npm run build && npm run start"
   },
   "dependencies": {
     "@codemirror/lang-cpp": "^6.0.2",
