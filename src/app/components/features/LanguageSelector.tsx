@@ -25,7 +25,6 @@ export const LanguageSelector = memo(function LanguageSelector({
       aria-description="Выберите язык программирования для редактора кода"
     >
       <SelectTrigger
-        className="w-[180px]"
         aria-label="Выбор языка программирования"
       >
         {/* плейсхолдер на случай, если питон не будет выставлен по умолчанию */}
