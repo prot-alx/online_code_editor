@@ -7,8 +7,8 @@ import {
   CodeSamples,
   EditorWithControls,
   ExecutionResult,
+  TaskDescription,
 } from "@/app/components";
-import { TaskDescription } from "./components/task/TaskDescription";
 
 interface ExecutionResult {
   success: boolean;
