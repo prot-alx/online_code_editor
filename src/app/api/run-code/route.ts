@@ -100,7 +100,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           success: false,
-          error: `${langConfig.label} не установлен в системе. Убедитесь, что Go установлен и доступен через командную строку.`,
+          error: `${langConfig.label} не установлен на сервере.`,
         },
         { status: 500 }
       );

@@ -25,6 +25,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleRun = async () => {
+    // На данный момент проверка не обязательна, т.к. кнопка имеет проверку на isEmpty
     if (!code.trim()) {
       setResult({
         success: false,

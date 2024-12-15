@@ -21,7 +21,7 @@ export const EditorWithControls = ({
   onExecute,
   isLoading,
 }: Readonly<EditorWithControlsProps>) => {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   const handleCodeChange = (newCode: string) => {
     if (newCode.length <= EDITOR_CONFIG.MAX_CODE_LENGTH) {

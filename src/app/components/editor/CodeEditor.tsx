@@ -11,7 +11,6 @@ interface CodeEditorProps {
   language: SupportedLanguage;
   code: string;
   onChange: (value: string) => void;
-  onExecute?: () => void;
   className?: string;
   style?: React.CSSProperties;
 }

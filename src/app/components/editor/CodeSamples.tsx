@@ -21,12 +21,17 @@ export const CodeSamples = ({ language }: CodeSamplesProps) => {
   }
 
   const handleCopy = async () => {
+    const timeout = setTimeout(() => setIsCopied(false), 2000);
     try {
       await copy(currentSample.code);
-      setIsCopied(true);
-      setTimeout(() => setIsCopied(false), 2000);
+      setIsCopied(true);      
     } catch (err) {
       console.error("Failed to copy:", err);
+    }
+    return () => {
+      if (timeout) {
+        clearTimeout(timeout);
+      }
     }
   };
 

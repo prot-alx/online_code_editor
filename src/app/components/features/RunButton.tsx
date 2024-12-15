@@ -1,5 +1,4 @@
 "use client";
-import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
 import { Button } from "../ui";
 
@@ -10,11 +9,7 @@ interface RunButtonProps {
 }
 
 export const RunButton = ({ onExecute, isLoading, code }: RunButtonProps) => {
-  const [isCodeEmpty, setIsCodeEmpty] = useState(true);
-
-  useEffect(() => {
-    setIsCodeEmpty(!code.trim());
-  }, [code]);
+  const isCodeEmpty = !code.trim();
 
   return (
     <Button
