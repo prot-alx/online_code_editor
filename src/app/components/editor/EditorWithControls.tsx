@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { debounce, SupportedLanguage } from "@/lib";
 import { EDITOR_CONFIG } from "@/constants";
 import { CodeEditor, EditorControls } from "..";
@@ -32,30 +32,6 @@ export const EditorWithControls = ({
   };
 
   const debouncedHandleCodeChange = debounce(handleCodeChange, 200);
-
-  const handleKeyDown = useCallback(
-    (event: Event) => {
-      if (event instanceof KeyboardEvent) {
-        if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
-          event.preventDefault();
-          if (!isLoading && code.trim()) {
-            onExecute();
-          }
-        }
-      }
-    },
-    [onExecute, isLoading, code]
-  );
-
-  useEffect(() => {
-    const element = containerRef?.current;
-    if (element) {
-      element.addEventListener("keydown", handleKeyDown, true);
-      return () => {
-        element.removeEventListener("keydown", handleKeyDown, true);
-      };
-    }
-  }, [handleKeyDown]);
 
   return (
     <div ref={containerRef} className="space-y-4">

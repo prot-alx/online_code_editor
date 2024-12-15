@@ -30,10 +30,7 @@ export const RunButton = ({ onExecute, isLoading, code }: RunButtonProps) => {
           Выполнение...
         </>
       ) : (
-        <>
-          <span className="sm:hidden">Запустить</span>
-          <span className="hidden sm:inline">Запустить (Ctrl+Enter)</span>
-        </>
+        <span>Запустить</span>
       )}
     </Button>
   );
