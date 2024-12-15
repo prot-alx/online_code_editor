@@ -7,7 +7,7 @@ interface EditorControlsProps {
   language: SupportedLanguage;
   setLanguage: (lang: SupportedLanguage) => void;
   code: string;
-  onRun: () => void;
+  onExecute: () => void;
   isLoading: boolean;
   codeLength: number;
   maxLength: number;
@@ -17,7 +17,7 @@ export const EditorControls = memo(function EditorControls({
   language,
   setLanguage,
   code,
-  onRun,
+  onExecute,
   isLoading,
   codeLength,
   maxLength,
@@ -26,7 +26,7 @@ export const EditorControls = memo(function EditorControls({
     <div className="space-y-4">
       <div className="flex items-center gap-4">
         <LanguageSelector language={language} setLanguage={setLanguage} />
-        <RunButton onRun={onRun} isLoading={isLoading} code={code} />
+        <RunButton onExecute={onExecute} isLoading={isLoading} code={code} />
       </div>
       <CharacterCounter currentLength={codeLength} maxLength={maxLength} />
     </div>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import { EDITOR_CONFIG } from "@/constants";
 import { SupportedLanguage } from "@/lib";
 import { runCode } from "./api/code";
@@ -24,7 +24,7 @@ export default function Home() {
   const [result, setResult] = useState<ExecutionResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleRun = useCallback(async () => {
+  const handleRun = async () => {
     if (!code.trim()) {
       setResult({
         success: false,
@@ -52,7 +52,7 @@ export default function Home() {
     } finally {
       setIsLoading(false);
     }
-  }, [code, language]);
+  };
 
   return (
     <main className="2xl:container mx-auto px-4 py-8 flex flex-col gap-6">
@@ -66,13 +66,15 @@ export default function Home() {
           setLanguage={setLanguage}
           code={code}
           setCode={setCode}
-          onRun={handleRun}
+          onExecute={handleRun}
           isLoading={isLoading}
         />
+
         <article>
           <ExecutionResult result={result} />
         </article>
       </section>
+
       <section>
         <CodeSamples language={language} />
       </section>

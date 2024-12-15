@@ -9,7 +9,7 @@ interface EditorWithControlsProps {
   setLanguage: (lang: SupportedLanguage) => void;
   code: string;
   setCode: (code: string) => void;
-  onRun: () => void;
+  onExecute: () => void;
   isLoading: boolean;
 }
 
@@ -18,7 +18,7 @@ export const EditorWithControls = ({
   setLanguage,
   code,
   setCode,
-  onRun,
+  onExecute,
   isLoading,
 }: Readonly<EditorWithControlsProps>) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -39,12 +39,12 @@ export const EditorWithControls = ({
         if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
           event.preventDefault();
           if (!isLoading && code.trim()) {
-            onRun();
+            onExecute();
           }
         }
       }
     },
-    [onRun, isLoading, code]
+    [onExecute, isLoading, code]
   );
 
   useEffect(() => {
@@ -65,7 +65,7 @@ export const EditorWithControls = ({
             language={language}
             setLanguage={setLanguage}
             code={code}
-            onRun={onRun}
+            onExecute={onExecute}
             isLoading={isLoading}
             codeLength={code.length}
             maxLength={EDITOR_CONFIG.MAX_CODE_LENGTH}

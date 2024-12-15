@@ -4,12 +4,12 @@ import { Loader2 } from "lucide-react";
 import { Button } from "../ui";
 
 interface RunButtonProps {
-  onRun: () => void;
+  onExecute: () => void;
   isLoading: boolean;
   code: string;
 }
 
-export const RunButton = ({ onRun, isLoading, code }: RunButtonProps) => {
+export const RunButton = ({ onExecute, isLoading, code }: RunButtonProps) => {
   const [isCodeEmpty, setIsCodeEmpty] = useState(true);
 
   useEffect(() => {
@@ -18,7 +18,7 @@ export const RunButton = ({ onRun, isLoading, code }: RunButtonProps) => {
 
   return (
     <Button
-      onClick={onRun}
+      onClick={onExecute}
       disabled={isLoading || isCodeEmpty}
       variant="default"
       className="min-w-[100px]"
