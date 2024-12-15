@@ -1,4 +1,4 @@
-import { SupportedLanguage } from "../utils/supported-languages";
+import { SupportedLanguage } from "..";
 
 export interface CodeEditorProps {
   language: SupportedLanguage;

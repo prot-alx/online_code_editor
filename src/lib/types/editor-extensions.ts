@@ -6,8 +6,8 @@ import { go } from "@codemirror/lang-go";
 // import { cpp } from "@codemirror/lang-cpp";
 // import { rust } from "@codemirror/lang-rust";
 // Раскомментировать настройки в lib/utils/supported-languages.ts
-import { SupportedLanguage } from "../utils/supported-languages";
 import { LanguageSupport } from "@codemirror/language";
+import { SupportedLanguage } from "..";
 
 export const editorExtensions: Record<
   SupportedLanguage,
